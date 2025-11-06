@@ -1,1 +1,87 @@
+import numpy as np
+import pandas as pd
+import matplotlib.image as pltimg
+import matplotlib.pyplot as plt
+import streamlit as st
+from sklearn.cluster import KMeans
+import cv2
 
+class Main:
+    def main(Self):
+        
+        img_upl=st.file_uploader(label="Upload Image",
+                key="image_uploader1",
+                type=["jpg", "png"]) 
+       
+        if img_upl is not None:
+            # Read and display the uploaded image
+            image = pltimg.imread(img_upl)
+            if st.button("Show image"):
+                st.image(image, caption="🖼 Uploaded Image")
+        else:
+            st.info("👆 Upload an image to begin.")
+            
+        if img_upl is not None:
+            options = ["Select", "Remove Background", "Blur Image", "Color Quantization"]
+            choice = st.selectbox("Choose Service", options, key="select_box1")
+
+            if choice == "Remove Background":
+                st.info("🧹 Background removal selected!")
+                
+            elif choice == "Blur Image":
+                st.info("💫 Blur effect selected!")
+            elif choice == "Color Quantization":
+                
+                h,w,c=img_upl.shape
+                image_2d=np.reshape((h*w,c))
+                cluster=st.slider("Select amount of Color",min_value=3,max_value=100)
+                model=KMeans(n_clusters=cluster)
+                labels=model.fit_predict(image_2d)
+                
+                rgb_codes=model.cluster_centers_
+
+
+       
+class App(Main):
+    
+    def app(self):
+        
+        st.sidebar.markdown("""
+            <h3 style="
+                padding-top: 50px;
+                font-size: 40px;
+                color: pink;
+                text-align: center;
+                font-weight: 800;
+            ">
+            Pixcraft ✨
+            </h3>
+            """, unsafe_allow_html=True)
+        
+        st.sidebar.markdown("""
+                <h3 style="
+                font-size: 20px;
+                font-weight: 500;
+                text-align:center;
+                ">
+                Pixcraft Offers Various Services:
+                You Can 👇🏻\n
+                
+            1️⃣ Remove Backgrounds:Instantly remove image backgrounds with precision — perfect for product photos, portraits, or creative designs.
+
+            2️⃣ Blur Images:
+            Apply customizable blur effects to highlight subjects or create an aesthetic depth-of-field look.
+
+            3️⃣ Color Quantization:
+            Simplify your images by reducing the number of colors while maintaining visual quality — ideal for compression, artistic effects, or preprocessing in computer vision tasks.
+                </h3>
+                """,unsafe_allow_html=True)
+        
+        st.sidebar.success("💚Connected....")
+
+    
+obj=App()
+obj.app()
+obj.main()
+        
+    
