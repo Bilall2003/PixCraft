@@ -7,6 +7,7 @@ from sklearn.cluster import KMeans
 import cv2
 from rembg import remove
 import io
+from PIL import Image
 
 class Main:
     def main(Self):
@@ -28,10 +29,14 @@ class Main:
             choice = st.selectbox("Choose Service", options, key="select_box1")
 
             if choice == "Remove Background":
-                st.info("🧹 Background removal selected!")
+                try:
+                    pass
+                except Exception as e:
+                    st.error(f"⚠️ Something went wrong: {e}")
                 
             elif choice == "Blur Image":
-                st.info("💫 Blur effect selected!")
+                
+                pass
                 
             elif choice == "Color Quantization":
                 
@@ -50,35 +55,38 @@ class Main:
                     st.info("Number of Colors in image increase Generation time")
                     cluster=st.slider("Select amount of Color",min_value=3,max_value=100)
                     
-                    model=KMeans(n_clusters=cluster)
-                    labels=model.fit_predict(image_2d)
-                    
-                    rgb_codes=model.cluster_centers_.round(0).astype(np.uint8)
-                    
-                    quantized_img=np.reshape(rgb_codes[labels],(h,w,c))
-                    
-                    fig,ax=plt.subplots(figsize=(15,6),nrows=1,ncols=2,dpi=250)
-                    
-                    ax[0].imshow(image)
-                    ax[0].set_title("Original image")
-                    ax[0].axis("off")
-                    ax[1].imshow(quantized_img)
-                    ax[1].set_title("Quantized image")
-                    ax[1].axis("off")
-                    
+                    with st.status("Hold on, image is generating....") as status:
+                        
+                        model=KMeans(n_clusters=cluster)
+                        labels=model.fit_predict(image_2d)
+                        
+                        rgb_codes=model.cluster_centers_.round(0).astype(np.uint8)
+                        
+                        quantized_img=np.reshape(rgb_codes[labels],(h,w,c))
+                        
+                        fig,ax=plt.subplots(figsize=(15,6),nrows=1,ncols=2,dpi=250)
+                        
+                        ax[0].imshow(image)
+                        ax[0].set_title("Original image")
+                        ax[0].axis("off")
+                        ax[1].imshow(quantized_img)
+                        ax[1].set_title("Quantized image")
+                        ax[1].axis("off")
+                        
+                    status.update(label="✅Image Generated",state="complete")
                     st.pyplot(fig)
-                
-                buf = io.BytesIO()
-                plt.imsave(buf, quantized_img)
-                buf.seek(0)
+                        
+                    buf = io.BytesIO()
+                    plt.imsave(buf, quantized_img)
+                    buf.seek(0)
 
-                # Download button
-                st.download_button(
-                    label="📥 Download Quantized Image",
-                    data=buf,
-                    file_name="quantized_image.png",
-                    mime="image/png"
-                )
+                    # Download button
+                    st.download_button(
+                        label="📥Download Quantized Image",
+                        data=buf,
+                        file_name="quantized_image.png",
+                        mime="image/png"
+                    )
                     
        
 class App(Main):
