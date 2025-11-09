@@ -30,7 +30,15 @@ class Main:
 
             if choice == "Remove Background":
                 try:
-                    pass
+                    if len(image.shape) == 2:
+                        st.warning("⚠️ Grayscale image detected.")
+                    if image.shape[2] == 4:
+                        st.warning("⚠ RGBA image detected — using only RGB channels.")
+                    if image.shape[2] != 3:
+                        st.error(f"❌ Unsupported image format with {image.shape[2]} channels.")
+                    if image.shape[2]==3:
+                        st.success("✅ RGB image detected.")
+                
                 except Exception as e:
                     st.error(f"⚠️ Something went wrong: {e}")
                 
@@ -40,53 +48,58 @@ class Main:
                 
             elif choice == "Color Quantization":
                 
-                if len(image.shape) == 2:
-                    st.warning("⚠️ Grayscale image detected.")
-                if image.shape[2] == 4:
-                    st.warning("⚠ RGBA image detected — using only RGB channels.")
-                if image.shape[2] != 3:
-                    st.error(f"❌ Unsupported image format with {image.shape[2]} channels.")
-                if image.shape[2]==3:
-                    st.success("✅ RGB image detected.")
+                try:
                 
-                    h,w,c=image.shape
-                    image_2d=image.reshape((h*w,c))
+                    if len(image.shape) == 2:
+                        st.warning("⚠️ Grayscale image detected.")
+                    if image.shape[2] == 4:
+                        st.warning("⚠ RGBA image detected — using only RGB channels.")
+                    if image.shape[2] != 3:
+                        st.error(f"❌ Unsupported image format with {image.shape[2]} channels.")
+                    if image.shape[2]==3:
+                        st.success("✅ RGB image detected.")
                     
-                    st.info("Number of Colors in image increase Generation time")
-                    cluster=st.slider("Select amount of Color",min_value=3,max_value=100)
-                    
-                    with st.status("Hold on, image is generating....") as status:
+                        h,w,c=image.shape
+                        image_2d=image.reshape((h*w,c))
                         
-                        model=KMeans(n_clusters=cluster)
-                        labels=model.fit_predict(image_2d)
+                        st.info("Number of Colors in image increase Generation time")
+                        cluster=st.slider("Select amount of Color",min_value=3,max_value=100)
                         
-                        rgb_codes=model.cluster_centers_.round(0).astype(np.uint8)
-                        
-                        quantized_img=np.reshape(rgb_codes[labels],(h,w,c))
-                        
-                        fig,ax=plt.subplots(figsize=(15,6),nrows=1,ncols=2,dpi=250)
-                        
-                        ax[0].imshow(image)
-                        ax[0].set_title("Original image")
-                        ax[0].axis("off")
-                        ax[1].imshow(quantized_img)
-                        ax[1].set_title("Quantized image")
-                        ax[1].axis("off")
-                        
-                    status.update(label="✅Image Generated",state="complete")
-                    st.pyplot(fig)
-                        
-                    buf = io.BytesIO()
-                    plt.imsave(buf, quantized_img)
-                    buf.seek(0)
+                        with st.status("Hold on, image is generating....") as status:
+                            
+                            model=KMeans(n_clusters=cluster)
+                            labels=model.fit_predict(image_2d)
+                            
+                            rgb_codes=model.cluster_centers_.round(0).astype(np.uint8)
+                            
+                            quantized_img=np.reshape(rgb_codes[labels],(h,w,c))
+                            
+                            fig,ax=plt.subplots(figsize=(15,6),nrows=1,ncols=2,dpi=250)
+                            
+                            ax[0].imshow(image)
+                            ax[0].set_title("Original image")
+                            ax[0].axis("off")
+                            ax[1].imshow(quantized_img)
+                            ax[1].set_title("Quantized image")
+                            ax[1].axis("off")
+                            
+                        status.update(label="✅Image Generated",state="complete")
+                        st.pyplot(fig)
+                            
+                        buf = io.BytesIO()
+                        plt.imsave(buf, quantized_img)
+                        buf.seek(0)
 
-                    # Download button
-                    st.download_button(
-                        label="📥Download Quantized Image",
-                        data=buf,
-                        file_name="quantized_image.png",
-                        mime="image/png"
-                    )
+                        # Download button
+                        st.download_button(
+                            label="📥Download Quantized Image",
+                            data=buf,
+                            file_name="quantized_image.png",
+                            mime="image/png"
+                        )
+                
+                except Exception as e:
+                    st.error(f"⚠ Something Went Wrong {e}")
                     
        
 class App(Main):
@@ -124,7 +137,35 @@ class App(Main):
                 </h3>
                 """,unsafe_allow_html=True)
         
-        st.sidebar.success("💚Connected....")
+
+
+        st.sidebar.markdown("""
+            <style>
+            .blink-warning {
+                animation: blinker 1s linear infinite;
+                
+                font-weight: bold;
+                color:red;
+                font-size:18px;
+            }
+
+            @keyframes blinker {
+                50% {
+                    opacity: 0.2;
+                }
+            }
+            
+            </style>
+            """, unsafe_allow_html=True)
+
+        # Apply the blinking class manually to the warning container
+        st.sidebar.markdown(
+            '<div class="blink-warning">⚠️ Only RGB images supported here...</div>',
+            unsafe_allow_html=True
+        )
+
+
+
 
     
 obj=App()
