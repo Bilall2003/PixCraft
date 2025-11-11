@@ -37,15 +37,45 @@ class Main:
                     if image.shape[2] != 3:
                         st.error(f"❌ Unsupported image format with {image.shape[2]} channels.")
                     if image.shape[2]==3:
-                        st.success("✅ RGB image detected.")
+                        try:
+                            st.success("✅ RGB image detected.")
+                            
+                            with st.spinner("Generating image......"):
+                                rb_img=remove(image)
+                                st.image(rb_img,use_container_width=True,caption="Without background")
+                                
+                            buf=io.BytesIO()
+                            plt.imsave(buf,rb_img)
+                            buf.seek(0)
+                            
+                            st.download_button(
+                                label="📥Download image",
+                                data=buf,
+                                file_name="rb_image.png",
+                                mime="image/png"
+                            )
+                        except Exception as e:
+                            st.error(f"something went wrong{e}")
+                            
                 
                 except Exception as e:
                     st.error(f"⚠️ Something went wrong: {e}")
                 
             elif choice == "Blur Image":
+                try:
+            
+                    if len(image.shape)==2:
+                        st.warning("⚠️ Grayscale image detected.")
+                    if image.shape[2]==4:
+                        st.warning("⚠ RGBA image detected — using only RGB channels.")
+                    if image.shape[2]!=3:
+                        st.error(f"❌ Unsupported image format with {image.shape[2]} channels.")
+                    if image.shape[2]==3:
+                        st.success("✅ RGB image detected.")
                 
-                pass
-                
+                except Exception as e:
+                    st.error(f"Something went wrong {e}")
+       
             elif choice == "Color Quantization":
                 
                 try:
@@ -67,6 +97,7 @@ class Main:
                         
                         with st.status("Hold on, image is generating....") as status:
                             
+                            st.write("Infusing Colors......")
                             model=KMeans(n_clusters=cluster)
                             labels=model.fit_predict(image_2d)
                             
