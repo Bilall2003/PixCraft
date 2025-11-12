@@ -37,3 +37,36 @@ Beautiful, minimal interface with sidebar explanations and custom CSS styling.
 | **Pillow (PIL)**          | Image handling                  |
 | **NumPy**                 | Array and pixel manipulation    |
 
+# How It Works
+
+Upload Image → Streamlit reads the image into memory.
+
+Select a Service → Choose one of the operations:
+
+🪄 Remove Background (via rembg.remove())
+
+🌫 Blur Image (via cv2.GaussianBlur())
+
+🎨 Color Quantization (via KMeans clustering)
+
+Download Output → The app generates a downloadable processed image.
+
+# ⚠️ Important Notes
+
+Only RGB images (3 channels) are fully supported.
+Grayscale and RGBA images trigger warnings.
+
+Large images or high KMeans clusters (>100) may slow processing.
+
+If rembg shows ONNX errors, reinstall onnxruntime inside your environment.
+
+# Future Enhancements
+
+📷 Image cropping and resizing
+
+🧠 AI-based image filters (cartoonize, enhance)
+
+📁 Batch processing support
+
+💾 Cloud storage integration
+
