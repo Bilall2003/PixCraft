@@ -71,7 +71,17 @@ class Main:
                     if image.shape[2]!=3:
                         st.error(f"❌ Unsupported image format with {image.shape[2]} channels.")
                     if image.shape[2]==3:
-                        st.success("✅ RGB image detected.")
+                        try:
+                            st.success("✅ RGB image detected.")
+                            
+                            ksize = st.slider("Select blur strength", 3, 400, 15, step=2)  # blur strength,step=2 will provide increment by 2 odd number gaussian requirement
+                            with st.spinner("Applying blur..."):
+                                blur = cv2.GaussianBlur(image, (ksize, ksize), 0)  # ksize,ksize=same amount of blur on both x and y axis u can change it too
+
+                            st.image(blur, caption="Blurred Image", use_container_width=True)
+                            
+                        except Exception as e:
+                            st.error(f"something went wrong {e}")
                 
                 except Exception as e:
                     st.error(f"Something went wrong {e}")
