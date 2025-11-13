@@ -1,9 +1,8 @@
 streamlit
 numpy
 pandas
-matplotlib
-pyplot
-image
+matplotlib.pyplot
+matplotlib.image
 scikit-learn
 opencv-python-headless
 rembg
