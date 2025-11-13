@@ -80,6 +80,18 @@ class Main:
 
                             st.image(blur, caption="Blurred Image", use_container_width=True)
                             
+                            buf=io.BytesIO()
+                            plt.imsave(buf,blur)
+                            buf.seek(0)
+                            
+                            st.download_button(
+                                label="📥Download Image",
+                                data=buf,
+                                file_name="blur_img.png",
+                                mime="image/png"
+                            )
+                            
+                            
                         except Exception as e:
                             st.error(f"something went wrong {e}")
                 
