@@ -1,10 +1,8 @@
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import streamlit as st
-from sklearn.cluster import KMeans
-import cv2
-from rembg import remove
-import io
-from PIL import Image
-
+numpy
+pandas
+matplotlib
+streamlit
+scikit-learn
+opencv-python-headless
+rembg
+Pillow
