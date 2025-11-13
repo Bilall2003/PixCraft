@@ -6,3 +6,5 @@ import streamlit as st
 from sklearn.cluster import KMeans
 import cv2
 from rembg import remove
+import io
+from PIL import Image
