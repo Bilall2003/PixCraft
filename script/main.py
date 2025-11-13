@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.image as pltimg
 import streamlit as st
 from sklearn.cluster import KMeans
 import cv2
@@ -17,7 +18,7 @@ class Main:
        
         if img_upl is not None:
             # Read and display the uploaded image
-            image = Image.open(img_upl)
+            image = pltimg.imread(img_upl)
             if st.button("Show image"):
                 st.image(image, caption="🖼 Uploaded Image")
         else:
@@ -215,9 +216,6 @@ class App(Main):
             '<div class="blink-warning">⚠️ Only RGB images supported here...</div>',
             unsafe_allow_html=True
         )
-
-
-
 
     
 obj=App()
