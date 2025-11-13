@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import matplotlib.image as pltimg
 import matplotlib.pyplot as plt
 import streamlit as st
 from sklearn.cluster import KMeans
@@ -18,7 +17,7 @@ class Main:
        
         if img_upl is not None:
             # Read and display the uploaded image
-            image = pltimg.imread(img_upl)
+            image = Image.open(img_upl)
             if st.button("Show image"):
                 st.image(image, caption="🖼 Uploaded Image")
         else:
