@@ -6,4 +6,5 @@ scikit-learn
 opencv-python-headless
 rembg
 Pillow
+io
 
