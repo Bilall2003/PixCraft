@@ -232,9 +232,8 @@ class Main:
                         status.update(label="✅Image Generated",state="complete")
                         st.pyplot(fig)
                             
-                        buf = io.BytesIO()
-                        plt.imsave(buf,bw)
-                        buf.seek(0)
+                        _, buffer = cv.imencode('.png', bw)
+                        buf = io.BytesIO(buffer)
 
                         # Download button
                         st.download_button(
