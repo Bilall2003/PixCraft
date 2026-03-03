@@ -27,7 +27,7 @@ class Main:
             st.info("👆 Upload an image to begin.")
             
         if img_upl is not None:
-            options = ["Select", "Remove Background", "Blur Image", "Color Quantization","Gray Scale"]
+            options = ["Select", "Remove Background", "Blur Image", "Color Quantization","Gray Scale","Black & White"]
             choice = st.selectbox("Choose Service", options, key="select_box1")
 
             if choice == "Remove Background":
