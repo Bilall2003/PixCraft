@@ -271,15 +271,22 @@ class App(Main):
                 Pixcraft Offers Various Services:
                 You Can 👇🏻\n
                 
-            1️⃣ Remove Backgrounds:Instantly remove image backgrounds with precision — perfect for product photos, portraits, or creative designs.
+            1️⃣ Remove Backgrounds:
+            Instantly remove image backgrounds with precision — perfect for product photos, portraits, or creative designs.
 
             2️⃣ Blur Images:
             Apply customizable blur effects to highlight subjects or create an aesthetic depth-of-field look.
 
             3️⃣ Color Quantization:
             Simplify your images by reducing the number of colors while maintaining visual quality — ideal for compression, artistic effects, or preprocessing in computer vision tasks.
+
+            4️⃣ Grayscale Conversion:
+            Convert your images into elegant grayscale tones — useful for analysis, artistic styling, or preprocessing in computer vision.
+
+            5️⃣ Black & White (Binary Effect):
+            Transform images into pure black and white using thresholding — ideal for document processing, edge detection, or high-contrast visuals.
                 </h3>
-                """,unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
         
 
 
