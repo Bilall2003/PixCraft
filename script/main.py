@@ -187,10 +187,8 @@ class Main:
                         status.update(label="✅Image Generated",state="complete")
                         st.pyplot(fig)
                             
-                        buf = io.BytesIO()
-                        plt.imsave(buf, grayscale_img)
-                        buf.seek(0)
-
+                        _, buffer = cv.imencode('.png', grayscale_img)
+                        buf = io.BytesIO(buffer)
                         # Download button
                         st.download_button(
                             label="📥Download Image",
@@ -220,14 +218,14 @@ class Main:
                             
                             st.write("Infusing Colors......")
                             grayscale_img=cv.cvtColor(image,cv.COLOR_RGB2GRAY)
-                            bw=cv.threshold(grayscale_img,127,155,cv.THRESH_BINARY)
+                            _,bw=cv.threshold(grayscale_img,127,255,cv.THRESH_BINARY)
                             
                             fig,ax=plt.subplots(figsize=(15,6),nrows=1,ncols=2,dpi=250)
                             
                             ax[0].imshow(image)
                             ax[0].set_title("Original image")
                             ax[0].axis("off")
-                            ax[1].imshow(bw)
+                            ax[1].imshow(bw,cmap="gray")
                             ax[1].set_title("Black and White image")
                             ax[1].axis("off")
                             
