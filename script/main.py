@@ -169,11 +169,58 @@ class Main:
                     if image.shape[2]==3:
                         st.success("✅ RGB image detected.")
                         
-                        grayscale_img=cv.cvtColor(image,cv.COLOR_RGB2GRAY)
                         
                         with st.status("Hold on, image is generating....") as status:
                             
                             st.write("Infusing Colors......")
+                            grayscale_img=cv.cvtColor(image,cv.COLOR_RGB2GRAY)
+                            bw=cv.threshold(grayscale_img,127,155,cv.THRESH_BINARY)
+                            
+                            fig,ax=plt.subplots(figsize=(15,6),nrows=1,ncols=2,dpi=250)
+                            
+                            ax[0].imshow(image)
+                            ax[0].set_title("Original image")
+                            ax[0].axis("off")
+                            ax[1].imshow(bw)
+                            ax[1].set_title("Black & White Image")
+                            ax[1].axis("off")
+                            
+                        status.update(label="✅Image Generated",state="complete")
+                        st.pyplot(fig)
+                            
+                        buf = io.BytesIO()
+                        plt.imsave(buf, bw)
+                        buf.seek(0)
+
+                        # Download button
+                        st.download_button(
+                            label="📥Download Image",
+                            data=buf,
+                            file_name="Black and White image.png",
+                            mime="image/png"
+                        )
+                
+                except Exception as e:
+                    st.error(f"⚠ Something Went Wrong {e}")
+                    
+            elif choice == "Black & White":
+                
+                try:
+                
+                    if len(image.shape) == 2:
+                        st.warning("⚠️ Grayscale image detected.")
+                    if image.shape[2] == 4:
+                        st.warning("⚠ RGBA image detected — using only RGB channels.")
+                    if image.shape[2] != 3:
+                        st.error(f"❌ Unsupported image format with {image.shape[2]} channels.")
+                    if image.shape[2]==3:
+                        st.success("✅ RGB image detected.")
+                        
+                        
+                        with st.status("Hold on, image is generating....") as status:
+                            
+                            st.write("Infusing Colors......")
+                            grayscale_img=cv.cvtColor(image,cv.COLOR_RGB2GRAY)
                             
                             fig,ax=plt.subplots(figsize=(15,6),nrows=1,ncols=2,dpi=250)
                             
