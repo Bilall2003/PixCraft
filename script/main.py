@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as pltimg
 import streamlit as st
 from sklearn.cluster import KMeans
-import cv2
+import cv2 as cv
 from rembg import remove
 import io
 from PIL import Image
@@ -78,7 +78,7 @@ class Main:
                             
                             ksize = st.slider("Select blur strength", 3, 400, 15, step=2)  # blur strength,step=2 will provide increment by 2 odd number gaussian requirement
                             with st.spinner("Applying blur..."):
-                                blur = cv2.GaussianBlur(image, (ksize, ksize), 0)  # ksize,ksize=same amount of blur on both x and y axis u can change it too
+                                blur = cv.GaussianBlur(image, (ksize, ksize), 0)  # ksize,ksize=same amount of blur on both x and y axis u can change it too
 
                             st.image(blur, caption="Blurred Image", use_container_width=True)
                             
@@ -168,44 +168,34 @@ class Main:
                         st.error(f"❌ Unsupported image format with {image.shape[2]} channels.")
                     if image.shape[2]==3:
                         st.success("✅ RGB image detected.")
-                    
-                        h,w,c=image.shape
-                        image_2d=image.reshape((h*w,c))
                         
-                        st.info("Number of Colors in image increase Generation time")
-                        cluster=st.slider("Select amount of Color",min_value=3,max_value=100)
+                        grayscale_img=cv.cvtColor(image,cv.COLOR_RGB2GRAY)
                         
                         with st.status("Hold on, image is generating....") as status:
                             
                             st.write("Infusing Colors......")
-                            model=KMeans(n_clusters=cluster)
-                            labels=model.fit_predict(image_2d)
-                            
-                            rgb_codes=model.cluster_centers_.round(0).astype(np.uint8)
-                            
-                            quantized_img=np.reshape(rgb_codes[labels],(h,w,c))
                             
                             fig,ax=plt.subplots(figsize=(15,6),nrows=1,ncols=2,dpi=250)
                             
                             ax[0].imshow(image)
                             ax[0].set_title("Original image")
                             ax[0].axis("off")
-                            ax[1].imshow(quantized_img)
-                            ax[1].set_title("Quantized image")
+                            ax[1].imshow(grayscale_img)
+                            ax[1].set_title("Gray Scale Image")
                             ax[1].axis("off")
                             
                         status.update(label="✅Image Generated",state="complete")
                         st.pyplot(fig)
                             
                         buf = io.BytesIO()
-                        plt.imsave(buf, quantized_img)
+                        plt.imsave(buf, grayscale_img)
                         buf.seek(0)
 
                         # Download button
                         st.download_button(
-                            label="📥Download Quantized Image",
+                            label="📥Download Image",
                             data=buf,
-                            file_name="quantized_image.png",
+                            file_name="Gray Scale image.png",
                             mime="image/png"
                         )
                 
