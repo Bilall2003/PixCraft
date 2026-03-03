@@ -180,7 +180,7 @@ class Main:
                             ax[0].imshow(image)
                             ax[0].set_title("Original image")
                             ax[0].axis("off")
-                            ax[1].imshow(grayscale_img)
+                            ax[1].imshow(grayscale_img,cmap="gray")
                             ax[1].set_title("Gray Scale Image")
                             ax[1].axis("off")
                             
