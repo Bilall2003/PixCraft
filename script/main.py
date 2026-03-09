@@ -147,7 +147,7 @@ class Main:
 
                         # Download button
                         st.download_button(
-                            label="📥Download Quantized Image",
+                            label="📥Download Image",
                             data=buf,
                             file_name="quantized_image.png",
                             mime="image/png"
