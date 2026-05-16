@@ -1,74 +1,64 @@
-# live link
-https://pixcraft.streamlit.app/
-# PixCraft
-Interactive Streamlit dashboard to remove backgrounds, blur images, and apply color quantization — built with Python, OpenCV, and scikit-learn.
+# ✨ Pixcraft Studio: Batch Image Processing Engine
 
-# Features
+Pixcraft Studio is a professional, high-contrast digital darkroom dashboard built with Streamlit, OpenCV, and scikit-learn. It allows users to upload up to 5 images simultaneously and assign individual, parallel image-processing workflows to each image via an elegant, tabbed workspace interface.
 
-✅ Upload Images:
-Easily upload .jpg or .png images from your computer.
+---
 
-✅ Remove Background:
-Uses the rembg library (powered by ONNX models) to automatically detect and remove image backgrounds with precision.
-Perfect for product photos, portraits, or transparent PNG generation.
+## 🚀 Features
 
-✅ Blur Images:
-Applies a Gaussian blur using OpenCV — great for hiding sensitive content or adding a cinematic depth-of-field effect.
-You can control the blur intensity with a simple slider.
+- **⚡ Concurrent Batch Processing:** Upload and manipulate up to 5 images concurrently without resetting state arrays.
+- **🎨 Isolated Workspace Nodes:** Utilize a distinct tabbed interface to configure individual pipeline logic per uploaded image.
+- **🖼️ Real-Time Preview Matrix:** Instantly view side-by-side comparative graphics of your original vs. processed images before exporting.
+- **🎛️ Parametric Control Sliders:** Finetune properties seamlessly using high-precision responsive thresholds.
 
-✅ Color Quantization:
-Reduces the number of colors in your image using K-Means clustering (via scikit-learn).
-Ideal for artistic effects, image compression, or simplifying color palettes.
+### Supported Micro-Services
+1. **Background Stripping:** Cleanly extracts focal foreground subjects using layered masking algorithms.
+2. **Adaptive Spatial Blur:** Applies dynamic Gaussian smoothing arrays across customizable radii.
+3. **Quantization Vectoring:** Compresses structural color profiles via multi-dimensional Euclidean $k$-Means clustering centroids.
+4. **Grayscale Extraction:** Restructures luminance mapping to transform colors down to a balanced gray balance spectrum.
+5. **High-Contrast Thresholding:** Splits pixel values into pure binary black and white spaces matching specified brightness cutoffs.
 
-✅ Instant Downloads:
-All processed images can be downloaded with a single click — no external tools required.
+---
 
-✅ Streamlit UI:
-Beautiful, minimal interface with sidebar explanations and custom CSS styling.
+## 🛠️ Tech Stack & Dependencies
 
-# Tech Stack
+Pixcraft Studio is powered by a robust backend vector processing array:
 
-| Technology                | Purpose                         |
-| ------------------------- | ------------------------------- |
-| **Python 3.x**            | Core programming language       |
-| **Streamlit**             | Web UI framework                |
-| **OpenCV (cv2)**          | Image processing                |
-| **Matplotlib**            | Visualization and saving images |
-| **scikit-learn (KMeans)** | Color quantization              |
-| **rembg**                 | Background removal              |
-| **Pillow (PIL)**          | Image handling                  |
-| **NumPy**                 | Array and pixel manipulation    |
+- **Frontend Interface:** [Streamlit](https://streamlit.io/)
+- **Computer Vision Framework:** [OpenCV (cv2)](https://opencv.org/)
+- **Machine Learning Core:** [scikit-learn (KMeans)](https://scikit-learn.org/)
+- **Image Segregation Utility:** [rembg](https://github.com/danielgatis/rembg)
+- **Data & Array Manipulation:** `numpy`, `pandas`, `Pillow (PIL)`
+- **Rendering Visualization Engine:** `matplotlib`
 
-# How It Works
+---
 
-Upload Image → Streamlit reads the image into memory.
+## 📦 Installation & Setup
 
-Select a Service → Choose one of the operations:
+Follow these quick implementation phases to launch your local Pixcraft Studio node instance:
 
-🪄 Remove Background (via rembg.remove())
+### 1. Clone the Repository
 
-🌫 Blur Image (via cv2.GaussianBlur())
+git clone [https://github.com/yourusername/pixcraft-studio.git](https://github.com/yourusername/pixcraft-studio.git)
+cd pixcraft-studio
 
-🎨 Color Quantization (via KMeans clustering)
+2. Install Required Dependencies
+Ensure you have Python 3.8+ installed, then run:
 
-Download Output → The app generates a downloadable processed image.
+pip install numpy pandas matplotlib streamlit scikit-learn opencv-python rembg Pillow
 
-# ⚠️ Important Notes
+📖 How To Use
+Upload Assets: Drag and drop or browse up to 5 images (.jpg, .jpeg, .png) inside the primary batch synchronization terminal dashboard.
 
-Only RGB images (3 channels) are fully supported.
-Grayscale and RGBA images trigger warnings.
+Select Target Tab: Click on the dedicated file tab corresponding to the image you want to edit.
 
-Large images or high KMeans clusters (>100) may slow processing.
+Configure Logic Array: Open the dropdown selector menu and choose your target utility (e.g., Color Quantization).
 
-If rembg shows ONNX errors, reinstall onnxruntime inside your environment.
+Fine-tune Sliders: Adjust parameters such as Blur Intensity Radius or Target Color Clusters to fit your project constraints.
 
-# Future Enhancements
+Download Artifacts: Tap the high-contrast green Download Output Artifact button to export your rendering safely as a standalone .png asset.
 
-📷 Image cropping and resizing
+⚠️ Allocation Boundaries & Constraints
+Batch Size Limit: The sandboxed workspace is restricted to processing 5 parallel image uploads max per transactional workflow loop to protect local memory bounds.
 
-🧠 AI-based image filters (cartoonize, enhance)
-
-📁 Batch processing support
-
-💾 Cloud storage integration
-
+Color Model: Images are automatically standardized into 3-channel RGB matrix profiles for stable uniform manipulation.
