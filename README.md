@@ -59,6 +59,7 @@ Fine-tune Sliders: Adjust parameters such as Blur Intensity Radius or Target Col
 Download Artifacts: Tap the high-contrast green Download Output Artifact button to export your rendering safely as a standalone .png asset.
 
 ⚠️ Allocation Boundaries & Constraints
+
 Batch Size Limit: The sandboxed workspace is restricted to processing 5 parallel image uploads max per transactional workflow loop to protect local memory bounds.
 
 Color Model: Images are automatically standardized into 3-channel RGB matrix profiles for stable uniform manipulation.
