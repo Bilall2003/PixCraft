@@ -206,7 +206,7 @@ class Main:
                 st.error("⚠️ Maximum of 5 images can be loaded concurrently. Please trim your selections.")
                 return
 
-            st.markdown("<br><h2 style='font-size:1.8rem;'>🛠️ Working Workspace Array</h2>", unsafe_allow_html=True)
+            st.markdown("<br><h2 style='font-size:1.8rem;'>Working Workspace Array</h2>", unsafe_allow_html=True)
             
             # Dynamic high-contrast tab construction mapping
             tab_labels = [f"📄 {file.name[:18]}..." for file in uploaded_files]
