@@ -1,4 +1,4 @@
-**Live Link** available in latest **TAGS**
+**Live Link** available in latest # TAGS
 
 # ✨ Pixcraft Studio: Batch Image Processing Engine
 
